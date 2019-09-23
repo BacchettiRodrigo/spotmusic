@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Spotmusic</title>
+  
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, user-scalable=no"/>
+  
+   <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+   <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+  
+<div class="container">
+   <div class="jumbotron">
+       <h1>Spotmusic</h1>
+   </div>
+  
+   <h4>
+       Nova música
+   </h4>
+  
+   <form th:action="@{/playlists/{playlistId}/musics/save(playlistId=${playlistId})}" 
+    th:method="${music.id} == 0 ? post : put" th:object="${music}">
+       <div class="row">
+           <input id="id" type="hidden" th:field="*{id}"/>
+           <div class="form-group col-md-4">
+               <label for="title">Título:</label>
+               <input class="form-control" id="title" type="text" th:field="*{title}"/>
+               <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+           </div>
+  
+           <div class="form-group col-md-4">
+               <label for="artist">Artista:</label>
+               <input class="form-control" id="artist" type="text" th:field="*{artist}"/>
+               <div th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}"></div>
+           </div>
+  
+           <div class="form-group col-md-4">
+               <label for="note">Nota:</label>
+               <input class="form-control" id="note" type="number" th:field="*{note}"/>
+               <div th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></div>
+           </div>
+  
+       </div>
+       <div class="form-group">
+           <button class="btn btn-primary" type="submit">Salvar</button>
+       </div>
+  
+   </form>
+   <hr/>
+  
+   <a class="btn btn-light" th:href="@{/playlists/{playlistId}/musics/findAll(playlistId=${playlistId})}">Voltar</a>
+  
+   <hr/>
+   <footer class="footer">
+       <p>© 2019 Reignited</p>
+   </footer>
+  
+</div>
+</body>
+</html>

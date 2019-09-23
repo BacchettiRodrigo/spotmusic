@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Spotmusic</title>
+  
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, user-scalable=no"/>
+  
+   <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+   <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+  
+<div class="container">
+   <div class="jumbotron">
+       <h1>Spotmusic</h1>
+   </div>
+  
+   <div>
+       <a class="btn btn-primary" th:href="@{/playlists/{playlistId}/musics/insert(playlistId=${playlistId})}">Nova música</a>
+   </div>
+  
+   <hr/>
+   <div th:if="${musics != null}">
+       <h4>
+           Músicas da playlist
+       </h4>
+  
+       <div th:if="${mensagem != null}">
+           <div class="alert alert-info" role="alert">
+               <span th:text="${mensagem}">mensagem</span>
+           </div>
+       </div>
+  
+       <table class="table">
+           <thead>
+           <tr>
+               <th>Nome</th>
+               <th>Artista</th>
+               <th>Nota</th>
+               <th>Ação</th>
+           </tr>
+           </thead>
+           <tr th:each="music : ${musics}">
+               <td th:text="${music.title}">titulo</td>
+               <td th:text="${music.artist}">artista</td>
+               <td th:text="${music.note}">nota</td>
+               <td>
+                   <a class="btn btn-sm btn-info" 
+                   th:href="@{/playlists/{playlistId}/musics/{musicId}/update(playlistId=${playlistId},musicId=${music.id})}">Editar</a>
+                   <a class="btn btn-sm btn-danger"
+                    th:href="@{/playlists/{playlistId}/musics/{musicId}/remove(playlistId=${playlistId},musicId=${music.id})}">Excluir</a>
+               </td>
+           </tr>
+       </table>
+   </div>
+  
+   <div th:if="${#lists.isEmpty(musics)}">
+       <div class="alert alert-info" role="alert">
+           <span class="glyphicon 
+            glyphicon-exclamation-sign"></span>
+           Nenhuma música cadastrada!
+       </div>
+   </div>
+  
+   <hr/>
+   <a class="btn btn-light" th:href="@{/playlists/findAll}">Voltar</a>
+  
+   <hr/>
+   <footer class="footer">
+       <p>© 2019 Reignited</p>
+   </footer>
+  
+</div>
+</body>
+</html>
